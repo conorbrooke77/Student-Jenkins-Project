@@ -20,14 +20,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Standard Maven build command
                 bat 'mvn clean install -Dmaven.test.failure.ignore=true'
             }
         }
 
         stage('Test') {
             steps {
-                // Run tests, this is typically part of 'mvn clean install' but can be run separately
+                // Run tests, doing this separately to build to see when tests fail
                 bat 'mvn test'
             }
         }
@@ -38,10 +37,10 @@ pipeline {
             echo 'The build and test stages have completed.'
         }
         success {
-            echo 'Build and tests were successful.'
+            echo 'Tests were successful.'
         }
         failure {
-            echo 'Build or tests failed. Check the logs for details.'
+            echo 'Tests failed. Check the logs for details.'
         }
     }
 }
