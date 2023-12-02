@@ -6,9 +6,8 @@ pipeline {
     }
 
     environment {
-            JAVA_HOME = "C:\\Program Files\\Java\\jdk-21"
-        }
-        // rest of your pipeline
+        JAVA_HOME = "C:\\Program Files\\Java\\jdk-21"
+    }
 
     stages {
         stage('Checkout') {
@@ -20,27 +19,27 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean install -Dmaven.test.failure.ignore=true'
+                // Using 'mvn clean package' to compile and package the code
+                bat 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Archive Artifacts') {
             steps {
-                // Run tests, doing this separately to build to see when tests fail
-                bat 'mvn test'
+                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
             }
         }
     }
 
     post {
         always {
-            echo 'The build and test stages have completed.'
+            echo 'The build process has completed.'
         }
         success {
-            echo 'Tests were successful.'
+            echo 'Build was successful.'
         }
         failure {
-            echo 'Tests failed. Check the logs for details.'
+            echo 'Build failed. Check the logs for details.'
         }
     }
 }
