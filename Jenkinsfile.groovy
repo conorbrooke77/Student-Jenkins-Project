@@ -16,14 +16,14 @@ pipeline {
         stage('Build') {
             steps {
                 // Standard Maven build command
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
                 // Run tests, this is typically part of 'mvn clean install' but can be run separately
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
     }
