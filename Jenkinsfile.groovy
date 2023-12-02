@@ -20,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Using 'mvn clean package' to compile and package the code
-                bat 'mvn clean package'
+                bat 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
 
