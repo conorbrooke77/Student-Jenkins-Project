@@ -5,6 +5,11 @@ pipeline {
         maven 'M3'
     }
 
+    environment {
+            JAVA_HOME = "C:\\Program Files\\Java\\jdk-21"
+        }
+        // rest of your pipeline
+
     stages {
         stage('Checkout') {
             steps {
