@@ -21,19 +21,35 @@ pipeline {
                // Using 'mvn clean package' to compile and package the code
                bat 'mvn clean package -Dmaven.test.failure.ignore=true'
            }
+           post {
+               success {
+                   echo 'Build was successful.'
+               }
+               failure {
+                   echo 'Build failed. Check the logs.'
+               }
+           }
        }
 
+       stage('Test') {
+           steps {
+               echo 'Running tests...'
+               bat 'mvn test'
+           }
+           post {
+               success {
+                   echo 'Tests were successful.'
+               }
+               failure {
+                   echo 'Tests failed. Check the logs.'
+               }
+           }
+       }
    }
 
    post {
        always {
-           echo 'The build process has completed.'
-       }
-       success {
-           echo 'Build was successful.'
-       }
-       failure {
-           echo 'Build failed. Check the logs for details.'
+           echo 'The pipeline has completed successfully.'
        }
    }
 }
